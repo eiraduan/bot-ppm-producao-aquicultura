@@ -17,7 +17,7 @@ def main():
     data_dir.mkdir(parents=True, exist_ok=True)
     
     logger.info(f"Pasta de dados criada ou já existente em: {data_dir}")
-    logger.info("Iniciando o processo de download de arquivos anuais da Pesquisa da Pecuária Municipal (PPM) - Produção de origem animal, por tipo de produto")
+    logger.info("Iniciando o processo de download de arquivos anuais da Pesquisa da Pecuária Municipal (PPM) - Produção da aquicultura, por tipo de produto")
     
     # Códigos de municípios do estado de Rondônia (RO)
     municipality_codes_ro = [
@@ -39,13 +39,13 @@ def main():
             logger.info(f"Iniciando download para o ano: {year}")
             
             sidra_data = sidrapy.get_table(
-                table_code="74",
+                table_code="3940",
                 territorial_level="6",
                 ibge_territorial_code=municipalities_str,
                 period=f"{year}",
                 variable="all",
                 classifications={
-                    "80": "0,2682,2685,2686,2687,2683,2684"
+                    "654": "0,79366,32861,32865,32866,32867,32868,32869,32870,32871,32872,32873,32874,32875,32876,32877,32878,32879,32880,32881,32886,32887,32888,32889,32890,32891"
                 }
             )
             
@@ -54,7 +54,7 @@ def main():
             df.columns = df.iloc[0]
             df = df.iloc[1:, :]
 
-            file_name = f"PPM_RO_PRODUCAO_ORIGEM_ANIMAL_{year}.xlsx"
+            file_name = f"PPM_RO_PRODUCAO_AQUICULTURA_{year}.xlsx"
             full_path = data_dir / file_name
             
             df.to_excel(full_path, index=False)
