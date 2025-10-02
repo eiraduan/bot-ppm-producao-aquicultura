@@ -70,12 +70,11 @@ def main():
             if not df.empty:
                 logger.info(f"{len(df)} linhas prontas para serem carregadas.")
                 
-                # 4. Salva os dados no banco de dados
                 df.to_sql(
                     name=TABELA_DESTINO,
                     con=engine,
-                    if_exists='append', # Adiciona os dados à tabela existente
-                    index=False # Não salva o índice do DataFrame como uma coluna
+                    if_exists='append',
+                    index=False 
                 )
                 logger.info(f"Dados do arquivo '{arquivo_consolidado.name}' salvos na tabela '{TABELA_DESTINO}' com sucesso.")
             else:
